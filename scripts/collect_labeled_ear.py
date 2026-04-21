@@ -13,7 +13,9 @@ from infrastructure.vision.manual_eye_detector import ManualEyeDetector
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Collect EAR data with manual labels from webcam")
+    parser = argparse.ArgumentParser(
+        description="Collect EAR data with manual labels from webcam"
+    )
     parser.add_argument("--output", default="logs/manual_labeled_ear.csv")
     parser.add_argument("--camera-index", type=int, default=0)
     parser.add_argument("--width", type=int, default=800)
@@ -95,10 +97,16 @@ def main() -> None:
                 )
                 saved_rows += 1
 
-            status = f"LABEL={label_name}({label_value}) REC={'ON' if recording else 'OFF'}"
+            status = (
+                f"LABEL={label_name}({label_value}) REC={'ON' if recording else 'OFF'}"
+            )
             ear_text = "EAR: N/A" if ear is None else f"EAR: {ear:.3f}"
-            cv2.putText(frame, status, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-            cv2.putText(frame, ear_text, (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(
+                frame, status, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2
+            )
+            cv2.putText(
+                frame, ear_text, (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2
+            )
             cv2.putText(
                 frame,
                 f"saved={saved_rows}",
@@ -133,7 +141,9 @@ def main() -> None:
 
     camera.release()
     cv2.destroyAllWindows()
-    print(f"[collect] session={session_id} rows_saved={saved_rows} output={output_path}")
+    print(
+        f"[collect] session={session_id} rows_saved={saved_rows} output={output_path}"
+    )
 
 
 if __name__ == "__main__":

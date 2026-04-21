@@ -17,8 +17,12 @@ def run_monitor_loop(
     frame_index = 0
 
     calibration_enabled = bool(getattr(calibration_config, "enabled", False))
-    calibration_duration = max(1, int(getattr(calibration_config, "duration_seconds", 20)))
-    calibration_min_samples = max(30, int(getattr(calibration_config, "min_samples", 120)))
+    calibration_duration = max(
+        1, int(getattr(calibration_config, "duration_seconds", 20))
+    )
+    calibration_min_samples = max(
+        30, int(getattr(calibration_config, "min_samples", 120))
+    )
     calibration_factor = float(getattr(calibration_config, "threshold_factor", 0.75))
     calibration_min = float(getattr(calibration_config, "threshold_min", 0.15))
     calibration_max = float(getattr(calibration_config, "threshold_max", 0.30))
@@ -31,7 +35,9 @@ def run_monitor_loop(
     log_writer = None
     session_id = time.strftime("%Y%m%d_%H%M%S")
     if logging_enabled:
-        log_path = Path(str(getattr(logging_config, "ear_log_path", "logs/ear_runtime.csv")))
+        log_path = Path(
+            str(getattr(logging_config, "ear_log_path", "logs/ear_runtime.csv"))
+        )
         log_path.parent.mkdir(parents=True, exist_ok=True)
         log_file = log_path.open("a", newline="", encoding="utf-8")
         log_writer = csv.writer(log_file)
@@ -71,7 +77,9 @@ def run_monitor_loop(
                 if len(calibration_samples) >= calibration_min_samples:
                     avg_open_ear = sum(calibration_samples) / len(calibration_samples)
                     personalized = avg_open_ear * calibration_factor
-                    personalized = max(calibration_min, min(calibration_max, personalized))
+                    personalized = max(
+                        calibration_min, min(calibration_max, personalized)
+                    )
                     if hasattr(process_frame_use_case, "set_ear_threshold"):
                         process_frame_use_case.set_ear_threshold(personalized)
                     print(
@@ -85,9 +93,13 @@ def run_monitor_loop(
 
         status_text = "NO FACE"
         if result.has_face:
-            status_text = f"EAR: {result.ear:.3f}" if result.ear is not None else "EAR: N/A"
+            status_text = (
+                f"EAR: {result.ear:.3f}" if result.ear is not None else "EAR: N/A"
+            )
             if result.drowsy_probability is not None:
-                status_text = f"{status_text} | P(drowsy): {result.drowsy_probability:.2f}"
+                status_text = (
+                    f"{status_text} | P(drowsy): {result.drowsy_probability:.2f}"
+                )
 
         if result.is_drowsy:
             cv2.putText(
@@ -101,7 +113,9 @@ def run_monitor_loop(
             )
 
         if not calibration_done:
-            remaining = max(0, calibration_duration - int(time.time() - calibration_start))
+            remaining = max(
+                0, calibration_duration - int(time.time() - calibration_start)
+            )
             cv2.putText(
                 frame,
                 f"Calibrating... {remaining}s",
@@ -125,13 +139,19 @@ def run_monitor_loop(
                     f"{time.time():.3f}",
                     f"{result.ear:.6f}",
                     int(result.is_drowsy),
-                    "" if result.drowsy_probability is None else f"{result.drowsy_probability:.6f}",
+                    (
+                        ""
+                        if result.drowsy_probability is None
+                        else f"{result.drowsy_probability:.6f}"
+                    ),
                     threshold,
                     int(not calibration_done),
                 ]
             )
 
-        cv2.putText(frame, status_text, (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+        cv2.putText(
+            frame, status_text, (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2
+        )
         cv2.imshow("S-Eye Monitor", frame)
 
         key = cv2.waitKey(1) & 0xFF

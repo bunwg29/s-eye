@@ -95,8 +95,13 @@ class ProcessFrameUseCase:
 
         drowsy_probability: float | None = None
         is_drowsy_now = False
-        if self._ml_classifier is not None and len(self._ear_window) == self._ear_window.maxlen:
-            drowsy_probability = self._ml_classifier.predict_proba(list(self._ear_window))
+        if (
+            self._ml_classifier is not None
+            and len(self._ear_window) == self._ear_window.maxlen
+        ):
+            drowsy_probability = self._ml_classifier.predict_proba(
+                list(self._ear_window)
+            )
             self._last_drowsy_probability = drowsy_probability
             is_drowsy_now = drowsy_probability >= self._ml_probability_threshold
             state.consecutive_closed_frames = 0
@@ -117,7 +122,10 @@ class ProcessFrameUseCase:
             self._open_eye_frames = self._open_eye_frames + 1 if is_open_eye else 0
 
             hold_active = now < self._drowsy_hold_until
-            if self._open_eye_frames >= self._reopen_eye_frames_required and not hold_active:
+            if (
+                self._open_eye_frames >= self._reopen_eye_frames_required
+                and not hold_active
+            ):
                 state.is_drowsy = False
                 self._open_eye_frames = 0
                 self._last_drowsy_probability = drowsy_probability

@@ -38,7 +38,9 @@ def export_onnx(checkpoint_path: Path, output_path: Path) -> None:
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Export trained LSTM checkpoint to ONNX")
+    parser = argparse.ArgumentParser(
+        description="Export trained LSTM checkpoint to ONNX"
+    )
     parser.add_argument("--checkpoint", default="models/lstm_drowsiness.pt")
     parser.add_argument("--output", default="models/drowsiness.onnx")
     return parser

@@ -54,7 +54,9 @@ def _split_sessions(
 def _write_rows(path: Path, rows: list[dict[str, str]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["sequence_id", "timestep", "ear", "label"])
+        writer = csv.DictWriter(
+            f, fieldnames=["sequence_id", "timestep", "ear", "label"]
+        )
         writer.writeheader()
         writer.writerows(rows)
 

@@ -140,7 +140,9 @@ def train(args) -> None:
     val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = LstmDrowsinessModel(hidden_size=args.hidden_size, num_layers=args.num_layers).to(device)
+    model = LstmDrowsinessModel(
+        hidden_size=args.hidden_size, num_layers=args.num_layers
+    ).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     criterion = nn.BCELoss()
 
@@ -191,7 +193,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--train-csv", default=None, help="Optional train split CSV")
     parser.add_argument("--val-csv", default=None, help="Optional val split CSV")
     parser.add_argument(
-        "--output", default="models/lstm_drowsiness.pt", help="Path to save best checkpoint"
+        "--output",
+        default="models/lstm_drowsiness.pt",
+        help="Path to save best checkpoint",
     )
     parser.add_argument("--seq-len", type=int, default=16)
     parser.add_argument("--hidden-size", type=int, default=32)

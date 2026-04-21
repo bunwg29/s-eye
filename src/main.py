@@ -25,7 +25,9 @@ def main() -> None:
             ml_classifier = OnnxDrowsinessClassifier(model_path=config.ml.model_path)
             print(f"[S-Eye] ML mode enabled with model: {config.ml.model_path}")
         except Exception as exc:
-            print(f"[S-Eye] ML mode unavailable ({exc}). Falling back to classical EAR rules.")
+            print(
+                f"[S-Eye] ML mode unavailable ({exc}). Falling back to classical EAR rules."
+            )
 
     process_frame = ProcessFrameUseCase(
         eye_detector=eye_detector,

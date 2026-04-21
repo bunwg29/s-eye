@@ -11,7 +11,10 @@ class OnnxDrowsinessClassifier(DrowsinessClassifierPort):
     """ONNX Runtime adapter for sequence drowsiness classification."""
 
     def __init__(
-        self, model_path: str, input_name: str | None = None, output_name: str | None = None
+        self,
+        model_path: str,
+        input_name: str | None = None,
+        output_name: str | None = None,
     ) -> None:
         try:
             import onnxruntime as ort
@@ -25,7 +28,9 @@ class OnnxDrowsinessClassifier(DrowsinessClassifierPort):
             raise FileNotFoundError(f"ONNX model not found: {model_path}")
 
         self._ort = ort
-        self._session = ort.InferenceSession(str(model_file), providers=["CPUExecutionProvider"])
+        self._session = ort.InferenceSession(
+            str(model_file), providers=["CPUExecutionProvider"]
+        )
 
         inputs = self._session.get_inputs()
         outputs = self._session.get_outputs()

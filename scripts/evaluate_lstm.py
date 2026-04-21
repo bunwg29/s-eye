@@ -79,7 +79,9 @@ def evaluate(
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Evaluate trained LSTM drowsiness checkpoint")
+    parser = argparse.ArgumentParser(
+        description="Evaluate trained LSTM drowsiness checkpoint"
+    )
     parser.add_argument("--checkpoint", default="models/lstm_drowsiness.pt")
     parser.add_argument("--csv", default="data/ear_sequences.csv")
     parser.add_argument("--threshold", type=float, default=0.5)
@@ -93,7 +95,9 @@ if __name__ == "__main__":
     metrics = evaluate(samples, model, seq_len, threshold=float(args.threshold))
 
     print(f"samples={len(samples)} threshold={args.threshold}")
-    print(f"confusion_matrix: TP={metrics.tp} FP={metrics.fp} TN={metrics.tn} FN={metrics.fn}")
+    print(
+        f"confusion_matrix: TP={metrics.tp} FP={metrics.fp} TN={metrics.tn} FN={metrics.fn}"
+    )
     print(f"precision={metrics.precision:.4f}")
     print(f"recall={metrics.recall:.4f}")
     print(f"f1={metrics.f1:.4f}")

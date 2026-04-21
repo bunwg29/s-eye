@@ -94,7 +94,9 @@ class ManualEyeDetector(EyeDetectorPort):
         right = _Rect(right_x, eye_y, eye_w, eye_h)
         return left, right
 
-    def _map_rect_between_faces(self, eye: _Rect, src_face: _Rect, dst_face: _Rect) -> _Rect:
+    def _map_rect_between_faces(
+        self, eye: _Rect, src_face: _Rect, dst_face: _Rect
+    ) -> _Rect:
         sx = dst_face.w / max(1.0, float(src_face.w))
         sy = dst_face.h / max(1.0, float(src_face.h))
 
@@ -146,7 +148,9 @@ class ManualEyeDetector(EyeDetectorPort):
         x, y, w, h = max(faces, key=lambda r: r[2] * r[3])
         return _Rect(int(x), int(y), int(w), int(h))
 
-    def _detect_two_eyes(self, gray: np.ndarray, face: _Rect) -> tuple[_Rect, _Rect] | None:
+    def _detect_two_eyes(
+        self, gray: np.ndarray, face: _Rect
+    ) -> tuple[_Rect, _Rect] | None:
         x0, y0, w, h = face.x, face.y, face.w, face.h
         upper_h = int(h * 0.6)
         face_roi = gray[y0 : y0 + upper_h, x0 : x0 + w]

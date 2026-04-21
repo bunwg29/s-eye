@@ -10,7 +10,9 @@ def load_rows(input_csv: Path) -> list[dict[str, str]]:
         reader = csv.DictReader(f)
         required = {"session_id", "frame_index", "ear", "is_drowsy"}
         if not required.issubset(reader.fieldnames or set()):
-            raise ValueError("Input CSV must include: session_id,frame_index,ear,is_drowsy")
+            raise ValueError(
+                "Input CSV must include: session_id,frame_index,ear,is_drowsy"
+            )
         rows = list(reader)
 
     rows.sort(key=lambda r: (r["session_id"], int(r["frame_index"])))
@@ -32,7 +34,9 @@ def build_sequences(
 
     for session_id, samples in grouped.items():
         ears = [float(x["ear"]) for x in samples if x.get("ear") not in (None, "")]
-        labels = [float(x[label_column]) for x in samples if x.get("ear") not in (None, "")]
+        labels = [
+            float(x[label_column]) for x in samples if x.get("ear") not in (None, "")
+        ]
         n = len(ears)
         if n < window_size:
             continue
@@ -60,7 +64,9 @@ def write_output(output_csv: Path, rows: list[tuple[str, int, float, int]]) -> N
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Convert runtime EAR log to training sequence CSV")
+    parser = argparse.ArgumentParser(
+        description="Convert runtime EAR log to training sequence CSV"
+    )
     parser.add_argument("--input", default="logs/ear_runtime.csv")
     parser.add_argument("--output", default="data/ear_sequences.csv")
     parser.add_argument("--window-size", type=int, default=16)

@@ -43,7 +43,9 @@ class OpenCVCamera(FrameSourcePort):
         if self._cap is not None:
             self._cap.release()
 
-    def _parse_backend_preference(self, backend_preference: str) -> list[tuple[str, int]]:
+    def _parse_backend_preference(
+        self, backend_preference: str
+    ) -> list[tuple[str, int]]:
         mapping: dict[str, int] = {
             "any": cv2.CAP_ANY,
             "msmf": cv2.CAP_MSMF,
