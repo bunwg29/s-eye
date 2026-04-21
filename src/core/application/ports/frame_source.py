@@ -3,7 +3,7 @@ from typing import Any
 
 
 class FrameSourcePort(ABC):
-    """Port lấy frame từ camera/video source."""
+    """Port for reading frames from a camera/video source."""
 
     @abstractmethod
     def read(self) -> Any | None:

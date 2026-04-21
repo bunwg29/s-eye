@@ -60,7 +60,9 @@ def _write_rows(path: Path, rows: list[dict[str, str]]) -> None:
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Split sequence CSV by session into train/val/test")
+    parser = argparse.ArgumentParser(
+        description="Split sequence CSV by session into train/val/test"
+    )
     parser.add_argument("--input", default="data/ear_sequences.csv")
     parser.add_argument("--out-dir", default="data/splits")
     parser.add_argument("--train-ratio", type=float, default=0.7)
@@ -100,7 +102,9 @@ def main() -> None:
     _write_rows(out_dir / "val.csv", val_rows)
     _write_rows(out_dir / "test.csv", test_rows)
 
-    print(f"sessions train/val/test = {len(train_sessions)}/{len(val_sessions)}/{len(test_sessions)}")
+    print(
+        f"sessions train/val/test = {len(train_sessions)}/{len(val_sessions)}/{len(test_sessions)}"
+    )
     print(f"rows train/val/test = {len(train_rows)}/{len(val_rows)}/{len(test_rows)}")
     print(f"written={out_dir}")
 

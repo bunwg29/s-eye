@@ -42,7 +42,10 @@ class ManualEyeDetector(EyeDetectorPort):
 
         face = self._detect_primary_face(gray)
         if face is None:
-            if self._last_face is None or self._missing_face_frames >= self._max_missing_face_frames:
+            if (
+                self._last_face is None
+                or self._missing_face_frames >= self._max_missing_face_frames
+            ):
                 self._last_eyes = None
                 return None
             self._missing_face_frames += 1

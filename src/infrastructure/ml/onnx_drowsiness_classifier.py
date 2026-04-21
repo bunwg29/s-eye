@@ -10,7 +10,9 @@ from core.application.ports.drowsiness_classifier import DrowsinessClassifierPor
 class OnnxDrowsinessClassifier(DrowsinessClassifierPort):
     """ONNX Runtime adapter for sequence drowsiness classification."""
 
-    def __init__(self, model_path: str, input_name: str | None = None, output_name: str | None = None) -> None:
+    def __init__(
+        self, model_path: str, input_name: str | None = None, output_name: str | None = None
+    ) -> None:
         try:
             import onnxruntime as ort
         except ImportError as exc:  # pragma: no cover

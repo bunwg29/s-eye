@@ -6,7 +6,7 @@ Point = Tuple[float, float]
 
 @dataclass(frozen=True)
 class EyeLandmarks:
-    """6 điểm mốc của 1 mắt theo thứ tự chuẩn EAR: p1..p6."""
+    """Six landmarks of one eye in standard EAR order: p1..p6."""
 
     p1: Point
     p2: Point

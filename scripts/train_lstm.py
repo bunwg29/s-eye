@@ -67,9 +67,7 @@ def read_samples(csv_path: Path) -> list[SequenceSample]:
         reader = csv.DictReader(f)
         required = {"sequence_id", "timestep", "ear", "label"}
         if not required.issubset(reader.fieldnames or set()):
-            raise ValueError(
-                "CSV must include columns: sequence_id,timestep,ear,label"
-            )
+            raise ValueError("CSV must include columns: sequence_id,timestep,ear,label")
 
         rows = list(reader)
 
@@ -82,7 +80,9 @@ def read_samples(csv_path: Path) -> list[SequenceSample]:
     return [SequenceSample(values=v, label=labels[k]) for k, v in grouped.items()]
 
 
-def split_samples(samples: list[SequenceSample], val_ratio: float) -> tuple[list[SequenceSample], list[SequenceSample]]:
+def split_samples(
+    samples: list[SequenceSample], val_ratio: float
+) -> tuple[list[SequenceSample], list[SequenceSample]]:
     shuffled = samples[:]
     random.shuffle(shuffled)
     val_size = max(1, int(len(shuffled) * val_ratio)) if len(shuffled) > 2 else 1
@@ -182,11 +182,17 @@ def train(args) -> None:
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Train LSTM drowsiness classifier from EAR sequences")
-    parser.add_argument("--csv", required=True, help="Path to CSV with sequence_id,timestep,ear,label")
+    parser = argparse.ArgumentParser(
+        description="Train LSTM drowsiness classifier from EAR sequences"
+    )
+    parser.add_argument(
+        "--csv", required=True, help="Path to CSV with sequence_id,timestep,ear,label"
+    )
     parser.add_argument("--train-csv", default=None, help="Optional train split CSV")
     parser.add_argument("--val-csv", default=None, help="Optional val split CSV")
-    parser.add_argument("--output", default="models/lstm_drowsiness.pt", help="Path to save best checkpoint")
+    parser.add_argument(
+        "--output", default="models/lstm_drowsiness.pt", help="Path to save best checkpoint"
+    )
     parser.add_argument("--seq-len", type=int, default=16)
     parser.add_argument("--hidden-size", type=int, default=32)
     parser.add_argument("--num-layers", type=int, default=1)

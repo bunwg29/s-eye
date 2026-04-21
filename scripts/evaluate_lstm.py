@@ -41,7 +41,9 @@ def sequence_to_tensor(values: list[float], seq_len: int) -> torch.Tensor:
     return torch.tensor(seq, dtype=torch.float32).reshape(1, seq_len, 1)
 
 
-def evaluate(samples: list[SequenceSample], model: nn.Module, seq_len: int, threshold: float) -> Metrics:
+def evaluate(
+    samples: list[SequenceSample], model: nn.Module, seq_len: int, threshold: float
+) -> Metrics:
     tp = fp = tn = fn = 0
     with torch.no_grad():
         for sample in samples:

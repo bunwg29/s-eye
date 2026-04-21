@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class AlarmPort(ABC):
-    """Port cảnh báo âm thanh."""
+    """Audio alert port."""
 
     @abstractmethod
     def trigger(self) -> None:

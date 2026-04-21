@@ -5,7 +5,7 @@ from core.domain.value_objects.eye_landmarks import EyeLandmarks
 
 
 class EyeDetectorPort(ABC):
-    """Port phát hiện landmarks mắt từ frame."""
+    """Port for detecting eye landmarks from a frame."""
 
     @abstractmethod
     def detect(self, frame: Any) -> tuple[EyeLandmarks, EyeLandmarks] | None:

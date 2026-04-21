@@ -125,9 +125,7 @@ def run_monitor_loop(
                     f"{time.time():.3f}",
                     f"{result.ear:.6f}",
                     int(result.is_drowsy),
-                    ""
-                    if result.drowsy_probability is None
-                    else f"{result.drowsy_probability:.6f}",
+                    "" if result.drowsy_probability is None else f"{result.drowsy_probability:.6f}",
                     threshold,
                     int(not calibration_done),
                 ]

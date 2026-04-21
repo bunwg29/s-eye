@@ -10,9 +10,7 @@ def load_rows(input_csv: Path) -> list[dict[str, str]]:
         reader = csv.DictReader(f)
         required = {"session_id", "frame_index", "ear", "is_drowsy"}
         if not required.issubset(reader.fieldnames or set()):
-            raise ValueError(
-                "Input CSV must include: session_id,frame_index,ear,is_drowsy"
-            )
+            raise ValueError("Input CSV must include: session_id,frame_index,ear,is_drowsy")
         rows = list(reader)
 
     rows.sort(key=lambda r: (r["session_id"], int(r["frame_index"])))

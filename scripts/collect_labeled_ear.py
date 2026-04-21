@@ -16,8 +16,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Collect EAR data with manual labels from webcam")
     parser.add_argument("--output", default="logs/manual_labeled_ear.csv")
     parser.add_argument("--camera-index", type=int, default=0)
-    parser.add_argument("--width", type=int, default=640)
-    parser.add_argument("--height", type=int, default=480)
+    parser.add_argument("--width", type=int, default=800)
+    parser.add_argument("--height", type=int, default=600)
     parser.add_argument("--session-id", default=None)
     parser.add_argument("--skip-no-face", action="store_true")
     return parser
@@ -99,8 +99,24 @@ def main() -> None:
             ear_text = "EAR: N/A" if ear is None else f"EAR: {ear:.3f}"
             cv2.putText(frame, status, (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
             cv2.putText(frame, ear_text, (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(frame, f"saved={saved_rows}", (20, 105), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
-            cv2.putText(frame, "Keys: 0 ALERT | 1 DROWSY | r REC | q QUIT", (20, 140), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 2)
+            cv2.putText(
+                frame,
+                f"saved={saved_rows}",
+                (20, 105),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.7,
+                (255, 255, 0),
+                2,
+            )
+            cv2.putText(
+                frame,
+                "Keys: 0 ALERT | 1 DROWSY | r REC | q QUIT",
+                (20, 140),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                (200, 200, 200),
+                2,
+            )
             cv2.imshow("S-Eye Data Collection", frame)
 
             key = cv2.waitKey(1) & 0xFF
