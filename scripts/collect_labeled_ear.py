@@ -2,10 +2,16 @@ from __future__ import annotations
 
 import argparse
 import csv
+import sys
 import time
 from pathlib import Path
 
 import cv2
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
 
 from core.domain.services.drowsiness_rules import compute_ear
 from infrastructure.camera.opencv_camera import OpenCVCamera
