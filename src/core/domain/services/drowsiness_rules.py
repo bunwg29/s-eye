@@ -4,7 +4,7 @@ from core.domain.value_objects.eye_landmarks import EyeLandmarks
 
 
 def compute_ear(eye: EyeLandmarks) -> float:
-    """Tính Eye Aspect Ratio (EAR).
+    """Compute Eye Aspect Ratio (EAR).
 
     EAR = (||p2-p6|| + ||p3-p5||) / (2 * ||p1-p4||)
     """

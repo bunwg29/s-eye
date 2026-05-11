@@ -4,7 +4,8 @@ if (-not (Test-Path .venv)) {
   python -m venv .venv
 }
 
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-pip install -e .[dev]
-python -m main
+$pythonExe = Join-Path (Get-Location) ".venv\Scripts\python.exe"
+
+& $pythonExe -m pip install -r requirements.txt
+& $pythonExe -m pip install -e ".[dev,ml]"
+& $pythonExe -m main
